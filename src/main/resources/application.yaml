@@ -8,4 +8,4 @@ spring:
     hibernate:
       ddl-auto: create
     database: postgresql
-    database-plateform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
