@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -19,6 +20,7 @@ public class TransactionDto {
     private BigDecimal amount;
     private TransactionType type;
     private String destinationIban;
+    private LocalDate transactionDate;
     private Integer userId;
 
     public static TransactionDto fromEntity(Transaction transaction) {
@@ -27,6 +29,7 @@ public class TransactionDto {
                 .amount(transaction.getAmount())
                 .type(transaction.getType())
                 .destinationIban(transaction.getDestinationIban())
+                .transactionDate(transaction.getTransactionDate())
                 .userId(transaction.getUser().getId())
                 .build();
     }
@@ -37,6 +40,7 @@ public class TransactionDto {
                 .amount(transaction.getAmount())
                 .type(transaction.getType())
                 .destinationIban(transaction.getDestinationIban())
+                .transactionDate(LocalDate.now())
                 .user(
                     User.builder()
                         .id(transaction.getUserId())

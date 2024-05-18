@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +23,9 @@ public class Transaction extends AbstractEntity {
 
     @Column(name = "destination_iban")
     private String destinationIban;
+
+    @Column(name = "transaction_date", updatable = false)
+    private LocalDate transactionDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

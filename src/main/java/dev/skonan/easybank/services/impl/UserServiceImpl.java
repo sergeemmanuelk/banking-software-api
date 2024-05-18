@@ -8,6 +8,7 @@ import dev.skonan.easybank.services.AccountService;
 import dev.skonan.easybank.services.UserService;
 import dev.skonan.easybank.validators.ObjectsValidator;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -53,12 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Integer validateAccount(Integer id) {
 
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No user was found for user account validation"));
-
-        user.setActive(true);
 
         // Create bank account
         AccountDto account = AccountDto.builder()
@@ -66,6 +66,8 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         accountService.save(account);
+
+        user.setActive(true);
         userRepository.save(user);
 
         return user.getId();
