@@ -5,10 +5,10 @@ import dev.skonan.easybank.models.Address;
 import dev.skonan.easybank.repositories.AddressRepository;
 import dev.skonan.easybank.services.AddressService;
 import dev.skonan.easybank.validators.ObjectsValidator;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 

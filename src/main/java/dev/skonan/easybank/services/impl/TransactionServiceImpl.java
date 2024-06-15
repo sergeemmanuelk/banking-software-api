@@ -6,10 +6,10 @@ import dev.skonan.easybank.models.TransactionType;
 import dev.skonan.easybank.repositories.TransactionRepository;
 import dev.skonan.easybank.services.TransactionService;
 import dev.skonan.easybank.validators.ObjectsValidator;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;

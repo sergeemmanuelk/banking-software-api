@@ -1,12 +1,12 @@
 package dev.skonan.easybank.validators;
 
 import dev.skonan.easybank.exceptions.ObjectValidationException;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
 import org.springframework.stereotype.Component;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.Set;
 import java.util.stream.Collectors;
 
