@@ -5,7 +5,9 @@ import dev.skonan.easybank.dto.AccountDto;
 import dev.skonan.easybank.dto.AuthenticationRequest;
 import dev.skonan.easybank.dto.AuthenticationResponse;
 import dev.skonan.easybank.dto.UserDto;
+import dev.skonan.easybank.models.Role;
 import dev.skonan.easybank.models.User;
+import dev.skonan.easybank.repositories.RoleRepository;
 import dev.skonan.easybank.repositories.UserRepository;
 import dev.skonan.easybank.services.AccountService;
 import dev.skonan.easybank.services.UserService;
@@ -27,8 +29,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private static final String ROLE_USER = "ROLE_USER";
+
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final AccountService accountService;
+
     private final ObjectsValidator<UserDto> validator;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
@@ -103,6 +109,7 @@ public class UserServiceImpl implements UserService {
 
         User user = UserDto.toEntity(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(findOrCreateRole(ROLE_USER));
         var savedUser = userRepository.save(user);
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", savedUser.getId());
@@ -115,6 +122,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -132,5 +140,20 @@ public class UserServiceImpl implements UserService {
         return AuthenticationResponse.builder()
                 .token(token)
                 .build();
+    }
+
+    private Role findOrCreateRole(String roleName) {
+        Role role = roleRepository.findByName(roleName)
+                .orElse(null);
+
+        if (role == null) {
+            return roleRepository.save(
+                    Role.builder()
+                        .name(roleName)
+                        .build()
+            );
+        }
+
+        return role;
     }
 }

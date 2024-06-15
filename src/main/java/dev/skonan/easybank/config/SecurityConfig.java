@@ -80,6 +80,7 @@ public class SecurityConfig {
         config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         source.registerCorsConfiguration("/**", config);
+
         return new CorsFilter(source);
     }
 
@@ -93,6 +94,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
+
         return authenticationProvider;
     }
 
